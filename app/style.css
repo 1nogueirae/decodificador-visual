@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.card-body {
+    margin: 10px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
