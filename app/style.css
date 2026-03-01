@@ -33,9 +33,20 @@ main {
 }
 
 #logTextArea {
-    resize: none
+    resize: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .unselectable {
     user-select: none;
+}
+
+.card-text {
+    margin-bottom: 0px;
+}
+
+.form-select {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
