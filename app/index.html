@@ -12,34 +12,49 @@
 
 <body>
 
-    <div class="container">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <div class="card">
-                    <h5 class="card-header">1. Console de Entradas</h5>
-                    <div class="card-body">
-                        <p class="card-text">Cole o log bruto do equipamento aqui:</p>
-                        <textarea class="form-control" id="logTextArea"></textarea>
-                        <button id="translateButton" type="button" class="btn btn-dark">Traduzir</button>
+    <header>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand unselectable">
+                    <span>&#9881;</span>
+                    Decodificador Visual
+                </a>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card">
+                        <h5 class="card-header">1. Console de Entradas</h5>
+                        <div class="card-body">
+                            <p class="card-text">Cole o log bruto do equipamento aqui:</p>
+                            <textarea class="form-control" id="logTextArea" ></textarea>
+                            <button id="translateButton" type="button" class="btn btn-dark"
+                                disabled="true">Traduzir</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <h5 class="card-header">2. Tabela Parseada</h5>
-                    <div class="card-body">
-                        <p class="card-text">Aqui em baixo você verá uma tabela com a sua string traduzida apara uma
-                            tabela!
-                        </p>
-                        <div id="resultTable">
-                            <p>Sua tabela será exibida aqui.</p>
-                        </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <h5 class="card-header">2. Tabela Parseada</h5>
+                        <div class="card-body">
+                            <p class="card-text">Aqui em baixo você verá uma tabela com a sua string traduzida apara uma
+                                tabela!
+                            </p>
+                            <div id="resultTable">
+                                <p>Sua tabela será exibida aqui.</p>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 
