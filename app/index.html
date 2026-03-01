@@ -32,16 +32,17 @@
                         <h5 class="card-header">1. Console de Entradas</h5>
                         <div class="card-body">
                             <p class="card-text">Selecione o protocolo que deseja parsear:</p>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Tipo de Protocolo</option>
-                                <option value="1">GT-06</option>
-                                <option value="2">Placeholder</option>
+                            <select id="protocolSelect" class="form-select" aria-label="Default select example">
+                                <option selected value="0">Tipo de Protocolo</option>
+                                <option value="1">Teste</option>
+                                <option value="2">GT-06</option>
                                 <option value="3">Placeholder</option>
                             </select>
                             <p class="card-text">Cole o log bruto do equipamento aqui:</p>
+                            Para Testes:
+                            <p class="card-text" id="log-teste"></p>
                             <textarea class="form-control" id="logTextArea"></textarea>
-                            <button id="translateButton" type="button" class="btn btn-dark"
-                                disabled="true">Traduzir</button>
+                            <button id="btn_translateButton" type="button" class="btn btn-secondary" disabled>Traduzir</button>
                         </div>
                     </div>
                 </div>
@@ -49,7 +50,7 @@
                     <div class="card">
                         <h5 class="card-header">2. Tabela Parseada</h5>
                         <div class="card-body">
-                            <p class="card-text">Aqui em baixo você verá uma tabela com a sua string traduzida apara uma
+                            <p class="card-text">Aqui em baixo você verá uma tabela com a sua string traduzida para uma
                                 tabela!
                             </p>
                             <div id="resultTable">
@@ -63,7 +64,7 @@
         </div>
     </main>
 
-    <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/app.js"></script>
 
 </body>
 
