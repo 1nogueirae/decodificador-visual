@@ -1,7 +1,7 @@
 import type { IPacketParser } from "../IPacketParser.js";
-import { Packet } from "../packets/TestePacket.js";
+import { TestePacket } from "../packets/TestePacket.js";
 
-export class TesteParser implements IPacketParser {
+export class TesteParser implements IPacketParser<TestePacket> {
     validate(input: string): boolean {
         const parts = input.split(';');
         if (parts[0] !== 'START' || parts[parts.length - 1] !== 'END') {
@@ -19,12 +19,12 @@ export class TesteParser implements IPacketParser {
         return parts.length === 4;
     }
     
-    parse(input: string): Packet | null {
+    parse(input: string): TestePacket | null {
         if (!this.validate(input)) return null;
         const parts = input.split(';');
         const id = parseInt(parts[1]!);
         const lat = parseFloat(parts[2]!);
         const lng = parseFloat(parts[3]!);
-        return new Packet('Teste', id, lat, lng, false);
+        return new TestePacket('Teste', id, lat, lng, false);
     }
 }

@@ -1,7 +1,7 @@
-import { Packet } from "../packets/TestePacket.js";
+import { TestePacket } from "../packets/TestePacket.js";
 
-export class TableRenderer {
-    static renderTable(packet: Packet): void {
+export class TesteTableRenderer {
+    static renderTable(packet: TestePacket): void {
         const resultTable = document.getElementById('resultTable') as HTMLElement;
         resultTable.innerHTML = `
                             <table class="table">

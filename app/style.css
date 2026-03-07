@@ -4,19 +4,35 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1c2433;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(40, 86, 182, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 10%, rgba(11, 122, 99, 0.12), transparent 35%),
+        #f4f7fb;
 }
 
 header {
     flex-shrink: 0;
 }
 
+.nav-shell {
+    background: #ffffffcc;
+    border-bottom: 1px solid #dde5f0;
+    backdrop-filter: blur(6px);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
 main {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px 0;
+    align-items: flex-start;
+    padding: 28px 0;
 }
 
 .container {
@@ -24,18 +40,38 @@ main {
     width: 100%;
 }
 
+.app-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.panel-card {
+    border: 1px solid #dbe4f2;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(20, 34, 62, 0.08);
+}
+
+.panel-card .card-header {
+    background: linear-gradient(120deg, #eef3fb, #f6f9ff);
+    border-bottom: 1px solid #dbe4f2;
+    font-weight: 600;
+}
+
 .card-body {
-    margin: 10px;
+    margin: 8px;
 }
 
 .form-control {
     margin-bottom: 10px;
+    border-radius: 10px;
+    border-color: #ccd7e9;
 }
 
 #logTextArea {
-    resize: none;
+    resize: vertical;
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    min-height: 140px;
 }
 
 .unselectable {
@@ -43,10 +79,48 @@ main {
 }
 
 .card-text {
-    margin-bottom: 0px;
+    margin-bottom: 6px;
 }
 
 .form-select {
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border-color: #ccd7e9;
+}
+
+#btn_translateButton {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+#resultTable {
+    margin-top: 10px;
+}
+
+#resultTable table {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#resultTable thead th {
+    white-space: nowrap;
+    background-color: #eef3fb;
+}
+
+.label-muted {
+    margin-bottom: 2px;
+    font-size: 0.85rem;
+    color: #5f6f87;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 16px 0;
+    }
+
+    .card-body {
+        margin: 6px;
+    }
 }

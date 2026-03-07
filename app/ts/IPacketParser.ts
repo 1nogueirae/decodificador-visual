@@ -1,6 +1,7 @@
-import { Packet } from "./packets/TestePacket.js";
+import type { BasePacket } from "./packets/BasePacket.js";
 
-export interface IPacketParser {
-    parse(input: string): Packet | null;
+
+export interface IPacketParser<TPacket extends BasePacket> {
+    parse(input: string): TPacket | null;
     validate(input: string): boolean;
 }

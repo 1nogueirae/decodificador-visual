@@ -1,9 +1,13 @@
-export class Packet {
+import { BasePacket } from "./BasePacket.js";
+
+export class TestePacket extends BasePacket {
     constructor(
-        public protocol: string,
+        protocol: string,
         public id: number,
         public lat: number,
         public lng: number,
         public ignState: boolean
-    ) {}
+    ) {
+        super(protocol);
+    }
 }

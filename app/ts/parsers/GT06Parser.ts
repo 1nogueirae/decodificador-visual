@@ -1,7 +1,7 @@
 import type { IPacketParser } from "../IPacketParser.js";
-import { Packet } from "../packets/TestePacket.js";
+import { GT06Packet } from "../packets/GT06Packet.js";
 
-export class GT06Parser implements IPacketParser {
+export class GT06Parser implements IPacketParser<GT06Packet> {
     validate(input: string): boolean {
         console.warn('Validating GT-06 log:', input);
         if (!input.startsWith("7878") || !input.endsWith("0D0A")) {
@@ -11,70 +11,77 @@ export class GT06Parser implements IPacketParser {
         return true;
     }
 
-    parse(input: string): Packet | null {
+    parse(input: string): GT06Packet | null {
         if (!this.validate(input)) {
             console.error('GT-06 log inválido. Formato esperado: 7878...0D0A');
             return null;
         }
 
-        let startBit = input.substring(0, 4);
-        let packetLength = input.substring(4, 6);
-        let protocolNumber = input.substring(6, 8);
+        if (input.length < 72) {
+            console.error('GT-06 log inválido. Tamanho mínimo esperado para Location Packet: 72 chars hex.');
+            return null;
+        }
+
+        const startBit = input.substring(0, 4);
+        const packetLength = input.substring(4, 6);
+        const protocolNumber = input.substring(6, 8);
 
         let dateTime = input.substring(8, 20);
-        let year = parseInt(dateTime.substring(0, 2), 16) + 2000;
-        let month = parseInt(dateTime.substring(2, 4), 16);
-        let day = parseInt(dateTime.substring(4, 6), 16);
-        let hour = parseInt(dateTime.substring(6, 8), 16);
-        let minute = parseInt(dateTime.substring(8, 10), 16);
-        let second = parseInt(dateTime.substring(10, 12), 16);
+        const year = parseInt(dateTime.substring(0, 2), 16) + 2000;
+        const month = parseInt(dateTime.substring(2, 4), 16);
+        const day = parseInt(dateTime.substring(4, 6), 16);
+        const hour = parseInt(dateTime.substring(6, 8), 16);
+        const minute = parseInt(dateTime.substring(8, 10), 16);
+        const second = parseInt(dateTime.substring(10, 12), 16);
         dateTime = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
 
-        let satelliteCount = input.substring(20, 24);
-        let lat = input.substring(24, 32);
-        let lng = input.substring(32, 40);
-        let speed = input.substring(40, 44);
-        let courseStatus = input.substring(44, 48);
-        let mcc = input.substring(48, 52);
-        let mnc = input.substring(52, 56);
-        let lac = input.substring(56, 60);
-        let cellId = input.substring(60, 68);
-        let serialNumber = input.substring(68, 72);
-        let errorCheck = input.substring(72, 76);
-        let stopBit = input.substring(76, 80);
+        const gpsInfoAndSat = input.substring(20, 22);
+        const gpsInfoLength = parseInt(gpsInfoAndSat[0]!, 16);
+        const satelliteCount = parseInt(gpsInfoAndSat[1]!, 16);
 
-        console.log(`Parsed GT-06 packet:
-        Start Bit: ${startBit}
-        Packet Length: ${packetLength}
-        Protocol Number: ${protocolNumber}
-        Date Time: ${dateTime}
-        Satellite Count: ${satelliteCount}
-        Latitude: ${lat}
-        Longitude: ${lng}
-        Speed: ${speed}
-        Course Status: ${courseStatus}
-        MCC: ${mcc}
-        MNC: ${mnc}
-        LAC: ${lac}
-        Cell ID: ${cellId}
-        Serial Number: ${serialNumber}
-        Error Check: ${errorCheck}
-        Stop Bit: ${stopBit}`);
+        const latRaw = input.substring(22, 30);
+        const latDec = parseInt(latRaw, 16);
+        const lat = (latDec / 30000) / 60;
+
+        const lngRaw = input.substring(30, 38);
+        const lngDec = parseInt(lngRaw, 16);
+        const lng = (lngDec / 30000) / 60;
+
+        const speed = parseInt(input.substring(38, 40), 16);
+
+        const courseStatus = input.substring(40, 44);
+        const courseStatusDec = parseInt(courseStatus, 16);
+        const isSouthLatitude = (courseStatusDec & 0x0400) !== 0;
+        const isWestLongitude = (courseStatusDec & 0x0800) !== 0;
+        const course = courseStatusDec & 0x03ff;
+
+        const signedLat = isSouthLatitude ? -lat : lat;
+        const signedLng = isWestLongitude ? -lng : lng;
+
+        const mcc = input.substring(44, 48);
+        const mnc = input.substring(48, 50);
+        const lac = input.substring(50, 54);
+        const cellId = input.substring(54, 60);
+        const serialNumber = input.substring(60, 64);
+        const errorCheck = input.substring(64, 68);
+        const stopBit = input.substring(68, 72);
 
         return new GT06Packet(
+            'GT06',
             startBit,
             packetLength,
             protocolNumber,
             dateTime,
             satelliteCount,
-            lat,
-            lng,
+            signedLat,
+            signedLng,
             speed,
             courseStatus,
             mcc,
             mnc,
             lac,
             cellId,
+            course,
             serialNumber,
             errorCheck,
             stopBit

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 <body>
 
     <header>
-        <nav class="navbar bg-body-tertiary">
+        <nav class="navbar nav-shell">
             <div class="container-fluid">
                 <a class="navbar-brand unselectable">
                     <span>&#9881;</span>
@@ -25,10 +25,10 @@
 
 
     <main>
-        <div class="container">
+        <div class="container app-shell">
             <div class="row g-3">
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card panel-card h-100">
                         <h5 class="card-header">1. Console de Entradas</h5>
                         <div class="card-body">
                             <p class="card-text">Selecione o protocolo que deseja parsear:</p>
@@ -36,24 +36,23 @@
                                 <option selected value="0">Tipo de Protocolo</option>
                                 <option value="1">Teste</option>
                                 <option value="2">GT-06</option>
-                                <option value="3">Placeholder</option>
                             </select>
                             <p class="card-text">Cole o log bruto do equipamento aqui:</p>
-                            Para Testes:
+                            <p class="label-muted">Exemplo para testes:</p>
                             <p class="card-text" id="log-teste"></p>
-                            <textarea class="form-control" id="logTextArea"></textarea>
-                            <button id="btn_translateButton" type="button" class="btn btn-secondary" disabled>Traduzir</button>
+                            <textarea class="form-control" id="logTextArea" rows="7" placeholder="Cole aqui o pacote hexadecimal..."></textarea>
+                            <button id="btn_translateButton" type="button" class="btn btn-secondary w-100" disabled>Traduzir</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card panel-card h-100">
                         <h5 class="card-header">2. Tabela Parseada</h5>
                         <div class="card-body">
                             <p class="card-text">Aqui em baixo você verá uma tabela com a sua string traduzida para uma
                                 tabela!
                             </p>
-                            <div id="resultTable">
+                            <div id="resultTable" class="table-responsive">
                                 <p>Sua tabela será exibida aqui.</p>
                             </div>
 

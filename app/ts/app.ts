@@ -1,7 +1,13 @@
 import type { IPacketParser } from "./IPacketParser.js";
-import { TableRenderer } from "./tablesRenderers/TesteTableRenderer.js";
-import { GT06Parser } from "./parsers/GT06Parser.js";
+import type { BasePacket } from "./packets/BasePacket.js";
+import { TestePacket } from "./packets/TestePacket.js";
+import { GT06Packet } from "./packets/GT06Packet.js";
+
 import { TesteParser } from "./parsers/TesteParser.js";
+import { TesteTableRenderer } from "./tablesRenderers/TesteTableRenderer.js";
+
+import { GT06Parser } from "./parsers/GT06Parser.js";
+import { GT06TableRenderer } from "./tablesRenderers/GT06TableRenderer.js";
 
 const btn_translateButton = document.querySelector('#btn_translateButton') as HTMLButtonElement;
 
@@ -29,23 +35,30 @@ logTextArea.addEventListener('input', updateButtonState);
 protocolSelect.addEventListener('change', updateButtonState);
 
 btn_translateButton?.addEventListener('click', () => {
+    console.info("Translate button clicked");
     const input = logTextArea.value.trim();
-    let parser: IPacketParser | null = null;
+    let parser: IPacketParser<BasePacket> | null = null;
     switch (protocolSelect.value) {
         case '1':
-            console.warn('Teste parser selected');
+            console.info('Teste parser selected');
             parser = new TesteParser();
             break;
         case '2':
-            console.warn('GT-06 parser selected');
+            console.info('GT-06 parser selected');
             parser = new GT06Parser();
             break;
     }
 
     const packet = parser?.parse(input) ?? null;
-
+    
     if (packet) {
-        TableRenderer.renderTable(packet);
+        if (packet instanceof TestePacket) {
+            console.info('Rendering Teste packet');
+            TesteTableRenderer.renderTable(packet);
+        } else if (packet instanceof GT06Packet) {
+            console.info('Rendering GT06 packet');
+            GT06TableRenderer.renderTable(packet);
+        }
     } else {
         resultTable.innerHTML = '<p>Log inválido.';
     }
